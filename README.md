@@ -1,7 +1,7 @@
 # BC-Projects
 
 Smart Contract "Rock-Scissors-Paper Game"
-Made based on the course material (not mine).
+Made based on the course material (the material is not mine).
 
 Была дана Web-игра, работающая только на JavaScript (html+css+js).
 
