@@ -46,14 +46,18 @@
 </details>
 
 
-## NFTCreation folder. It contains dApp for interaction with "Simple NFT" smart contract.
 
-The contract address:
 
+## NFTCreation folder. It contains dApp for interaction with "TestNFT" smart contract.
+**dApp ["NFT-gallery"](http://oademi.kz/NFTgallery/index.html)**
+
+Contract name **TestNFT**. The **address**:
 ```0x3d79cB0817813E02dED20d05081A26cbc07d2a9F```
 
-Here you can see [minted NFTs: ](https://testnets.opensea.io/collection/testnft-296).
-<details><summary>Note</summary>
-  Ресурсы сгенерированы бесплатным сервисом искусственного интеллекта.
+Here you can see [minted NFTs](https://testnets.opensea.io/collection/testnft-296).
+
+<details><summary>Note</summary>  
+  - Ресурсы сгенерированы бесплатным сервисом искусственного интеллекта.
+  - Вот [то](https://betterprogramming.pub/how-to-create-your-own-nft-smart-contract-tutorial-1b90978bd7a3), что очень помогло при создании NFT.
 </details>
 
