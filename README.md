@@ -44,3 +44,16 @@
 <details><summary>...</summary>
   **Это действительно работает контракт, развернутый на Remix, а не JavaScript**
 </details>
+
+
+## NFTCreation folder. It contains dApp for interaction with "Simple NFT" smart contract.
+
+The contract address:
+
+```0x3d79cB0817813E02dED20d05081A26cbc07d2a9F```
+
+Here you can see [minted NFTs: ](https://testnets.opensea.io/collection/testnft-296).
+<details><summary>Note</summary>
+  Ресурсы сгенерированы бесплатным сервисом искусственного интеллекта.
+</details>
+
