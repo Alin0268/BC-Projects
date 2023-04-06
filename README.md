@@ -58,6 +58,7 @@ Here you can see [minted NFTs](https://testnets.opensea.io/collection/testnft-29
 
 <details><summary>Note</summary>  
   - Ресурсы сгенерированы бесплатным сервисом искусственного интеллекта.
+  
   - Вот [то](https://betterprogramming.pub/how-to-create-your-own-nft-smart-contract-tutorial-1b90978bd7a3), что очень помогло при создании NFT.
 </details>
 
