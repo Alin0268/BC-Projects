@@ -49,7 +49,7 @@
 
 
 ## NFTCreation folder. It contains dApp for interaction with "TestNFT" smart contract.
-**dApp ["NFT-gallery"](http://oademi.kz/NFTgallery/index.html)**
+**dApp ["NFT-gallery"](https://oademi.kz/SimpleNFT/index.html)**
 
 Contract name **TestNFT**. The **address**:
 ```0x3d79cB0817813E02dED20d05081A26cbc07d2a9F```
