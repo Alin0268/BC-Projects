@@ -10,7 +10,9 @@ Here you can see [minted NFTs 1](https://testnets.opensea.io/collection/fruits-a
 
 <details><summary>Note</summary>
   
-  - Ресурсы сгенерированы бесплатным сервисом искусственного интеллекта.
+  - Ресурсы для [NFTs 1](https://testnets.opensea.io/collection/fruits-and-street-landscape) сгенерированы бесплатным сервисом искусственного интеллекта.
+  
+  - Но контент для [minted NFTs 2](https://testnets.opensea.io/collection/riddlesfordetectives) создан собственноручно.
   
   - Вот [то](https://betterprogramming.pub/how-to-create-your-own-nft-smart-contract-tutorial-1b90978bd7a3), что очень помогло при создании NFT.
 </details>
