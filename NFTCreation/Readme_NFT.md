@@ -6,7 +6,9 @@
 Contract name **TestNFT**. The **address**:
 ```0x3d79cB0817813E02dED20d05081A26cbc07d2a9F```
 
-Here you can see [minted NFTs](https://testnets.opensea.io/collection/fruits-and-street-landscape).
+Here you can see [minted NFTs 1](https://testnets.opensea.io/collection/fruits-and-street-landscape),
+
+and [minted NFTs 2](https://testnets.opensea.io/collection/riddlesfordetectives).
 
 <details><summary>Note</summary>
   
