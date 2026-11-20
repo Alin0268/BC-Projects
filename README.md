@@ -16,8 +16,6 @@ From the repository root, run `python3 -m http.server 8000 --bind 127.0.0.1` and
 
 The frontend calls `YourMove(option)` with `0` for rock, `1` for scissors or `2` for paper. After one confirmation it reads the contract's `Print` event from that transaction's receipt. A decisive round adds exactly one point to the winner. A draw, cancelled request, failed transaction or unreadable result adds no points. A pending transaction is not a failed transaction. The score resets when the page reloads.
 
-The old interface added a persistent `Print` listener on every move. That could delay display and count a later round more than once. The new flow reads the receipt directly and does not subscribe to game events. It does not change the deployed contract.
-
 Run the frontend regression tests with `node --test RSPdApp/tests/rounds.test.cjs`. The tests mock the wallet and transaction receipts and do not require a blockchain connection.
 
 <details>
@@ -25,7 +23,7 @@ Run the frontend regression tests with `node --test RSPdApp/tests/rounds.test.cj
 
 В учебной игре «Камень — ножницы — бумага» ход отправляется в смарт-контракт в тестовой сети BNB Smart Chain. Контракт определяет исход раунда, а страница ведёт счёт до её перезагрузки. Для игры подключите кошелёк к тестовой сети и используйте только тестовые токены.
 
-Раньше каждый ход добавлял ещё один обработчик события `Print`. Теперь интерфейс читает событие из квитанции своей транзакции после её подтверждения. За победу начисляется одно очко, при ничьей счёт не меняется. Отклонённая или неуспешная транзакция не меняет счёт. Не отправляйте ход повторно только потому, что подтверждение ещё не пришло.
+Интерфейс читает событие из квитанции своей транзакции после её подтверждения. За победу начисляется одно очко, при ничьей счёт не меняется. Отклонённая или неуспешная транзакция не меняет счёт. Не отправляйте ход повторно только потому, что подтверждение ещё не пришло.
 
 </details>
 
