@@ -1,4 +1,3 @@
-
 const contractAddress = "0xb3e139349108f2f65D72525587E3b62fbBCafe75"; //в Remix MyRSPv2.sol
 const abi = [
 	{
@@ -76,241 +75,129 @@ const abi = [
 	}
 ]
 
-const provider = new ethers.providers.Web3Provider(window.ethereum, 97); //bnbchain testnet
-let player;
-var contract;
+const chainId = 97; // BNB Smart Chain Testnet
+const moves = ['Rock', 'Scissors', 'Paper'];
+const buttons = [...document.querySelectorAll('.choice')];
+const userScoreSpan = document.getElementById('user-score');
+const computerScoreSpan = document.getElementById('computer-score');
+const result = document.querySelector('.result > p');
+const status = document.getElementById('action-msg');
+const resultLog = document.getElementById('resultLog');
 
-const event = "Print";
-
-provider.send("eth_requestAccounts", []).then(() => {
-    provider.listAccounts().then((accounts) => {player = provider.getSigner(accounts[0]); //account in metamask
-    contract = new ethers.Contract(contractAddress, abi, player);
-  });
-});
-
-
-let CompChoiceWORD;
-
+let busy = false;
 let userScore = 0;
 let computerScore = 0;
 
-const userScore_span = document.getElementById('user-score');
-const computerScore_span = document.getElementById('computer-score');
-const result_p = document.querySelector('.result > p');
-
-const rock_div = document.getElementById("0");
-const scissors_div = document.getElementById("1");
-const paper_div = document.getElementById("2");
-
-
-async function play(option) {
-    
-    const decimals = 18;
-    const input = "10"; // Note: this is a string, e.g. user input
-    //let amountInWei = ethers.utils.parseEther((0.00000000000000001).toString());
-    let amountInWei = ethers.utils.parseEther(input, decimals);
-    const setvalue = {value: amountInWei};
-    //console.log(setvalue);
-
-    await contract.YourMove(option);
-
-    /*
-    //Для информации о транзакции
-    const transaction = contract.YourMove(option, {gasLimit: 270000}); // call contract function.
-    //Берем данные о транзакции перед тем, как запрашивать параметры Event
-    transaction.wait().then(async (receipt) => { // console.log(receipt);
-        if (receipt && receipt.status == 1) { // transaction success.
-           console.log("WMATIC balance after single swap: ", await wmatic.balanceOf(accounts[0].address)  // print updated balances.
-           );
-        }
-     });
-     */
-
-    //Медленно работает
-    contract.on('Print', (_GetResult, _GetValue, _GetUserMove, _GetCompMove) => {
-        /*
-        let PlayEvent ={
-            GetUserMove: _GetUserMove.toString(),
-            GetCompMove: _GetCompMove.toString(),
-            GetResult: _GetResult.toString(),
-            GetValue: _GetValue.toString(),
-            eventData: event,
-        }
-        console.log(JSON.stringify(PlayEvent, null, 4))
-       */
-
-    console.log('GetUserMove: ', _GetUserMove.toString());
-    console.log('GetCompMove: ', _GetCompMove.toString());
-    console.log('GetResult: ', _GetResult.toString());
-    console.log('GetValue: ', _GetValue.toString());
-
-    var GetResult = _GetResult.toString();
-    var GetUserMove = _GetUserMove.toString();
-    var GetCompMove = _GetCompMove.toString();
-    //var GetValue = _GetValue.toString();
-
-    convertToWord(GetCompMove);
-    HTMLProcess(GetResult, GetUserMove, GetCompMove);
-
-    let ResultLogs = `
-        Your choice (from the dApp): ${option},
-        Your choice taken from the contract Event: ${GetUserMove},
-        Computer's choice taken from the contract Event: ${GetCompMove} -- ${CompChoiceWORD},
-        The result (taken from the contract): ${GetResult}
-        -------------------------------------------------`; 
-        //Contract amount (wei): ${input},
-        //Bet value (wei): ${GetValue}`;      
-    //console.log(ResultLogs);
-
-    let resultLog = document.getElementById("action-msg");
-    resultLog.innerText = ResultLogs;
-
-});
-    
-    /*
-    //Берем параметры исполненного контракта
-    //Асинхрон. Нужно правильно вызывать, чтобы не обещания, а нужные значения получить
-    let queryResult =  await contract.queryFilter('Print', await provider.getBlockNumber() - 5000, await provider.getBlockNumber());
-    let queryResultRecent = queryResult[queryResult.length-1];
-
-    console.log('GetUserMove: ', await queryResultRecent.args._option1.toString());
-    console.log('GetCompMove: ', await queryResultRecent.args._compmove.toString());
-    console.log('GetResult: ', await queryResultRecent.args._name.toString());
-    console.log('GetValue: ', await queryResultRecent.args._value.toString());
-
-    let ResultLogs = `
-            Your choice (from the dApp): ${option.toString()}),
-            Your choice (_option arg) got from the contract Event: ${await queryResultRecent.args._option1.toString()},
-            Computer's choice got from the contract Event: ${await queryResultRecent.args._compmove.toString()},
-            Computer's choice: ${CompChoiceWORD},
-            The result (got from the contract): ${await queryResultRecent.args._name.toString()}, 
-            Contract amount (wei): ${input},
-            Bet value (wei): ${await queryResultRecent.args._value.toString()}`;    
-        
-    console.log(ResultLogs);
-    
-    GetUserMove = await queryResultRecent.args._option1.toString();
-    GetCompMove = await queryResultRecent.args._compmove.toString();
-    GetResult = await queryResultRecent.args._name.toString();
-    GetValue = await queryResultRecent.args._value.toString();
-    */
-    
-
-    /*
-    console.log('GetResult: ', GetResult);
-    console.log('GetUserMove: ', GetUserMove);
-    console.log('GetCompMove: ', GetCompMove);
-    console.log('GetValue: ', GetValue);
-
-        GetResult = _GetResult.toString();
-        GetUserMove = _GetUserMove.toString();
-        GetCompMove = _GetCompMove.toString();
-        GetValue = _GetValue.toString();
-    */
-
-/*
-        convertToWord(GetCompMove);
-        
-        if (GetResult == "YOU WON"){
-            userScore++;
-            userScore_span.innerHTML = userScore;
-            if (GetUserMove == "0"){
-                result_p.innerHTML = `Rock (User) beats Scissors (Computer). You win!`;
-            }
-            if (GetUserMove == "1"){
-                result_p.innerHTML = `Scissors (User) beats Paper (Computer). You win!`;
-            }
-            if (GetUserMove == "2"){
-                result_p.innerHTML = `Paper (User) beats Rock (Computer). You win!`;
-            }
-        }
-    
-        if (GetResult == "COMPUTER WON"){
-            computerScore++;
-            computerScore_span.innerHTML = computerScore;
-            if (GetCompMove == "0") {
-                result_p.innerHTML = `Scissors (User) loses to Rock (Computer). You lost...`; 
-            }
-            if (GetCompMove == "1") {
-                result_p.innerHTML = `Paper (User) loses to Scissors (Computer). You lost...`;
-            }
-            if (GetCompMove == "2") {
-                result_p.innerHTML = `Rock (User) loses to Paper (Computer). You lost...`;
-            }
-        }
-    
-        if (GetResult == "DRAW"){
-            result_p.innerHTML = `DRAW`;
-        }
-        /*
-        //Bet value (wei): ${setvalue},
-        let ResultLogs = `
-            Your choice (from the dApp): ${option}),
-            Your choice (_option arg) got from the contract Event: ${GetUserMove},
-            Computer's choice got from the contract Event: ${GetCompMove},
-            Computer's choice: ${CompChoiceWORD},
-            The result (got from the contract): ${GetResult}, 
-            Contract amount (wei): ${input},
-            Bet value (wei): ${GetValue}`;    
-        
-        console.log(ResultLogs);
-        */
-    /*
-        let resultLog = document.getElementById("action-msg");
-        resultLog.innerText = ResultLogs;
-    */
+function showRound(outcome, userMove, computerMove) {
+    const user = moves[userMove];
+    const computer = moves[computerMove];
+    if (outcome === 'YOU WON') {
+        userScoreSpan.textContent = ++userScore;
+        result.textContent = `${user} (User) beats ${computer} (Computer). You win!`;
+    } else if (outcome === 'COMPUTER WON') {
+        computerScoreSpan.textContent = ++computerScore;
+        result.textContent = `${user} (User) loses to ${computer} (Computer). You lost.`;
+    } else {
+        result.textContent = `${user} (User) and ${computer} (Computer). Draw.`;
+    }
+    resultLog.textContent = `User: ${user}. Computer: ${computer}. ${outcome}.`;
 }
 
-    function convertToWord(cm) {
-        if (cm == "0") {
-            CompChoiceWORD = "Rock";
-        }
-        if (cm == "1") {
-            CompChoiceWORD = "Scissors";
-        }
-        if (cm == "2") {
-            CompChoiceWORD = "Paper";
-        }
+function roundFromReceipt(receipt, contract, option) {
+    const logs = receipt.logs.filter(log =>
+        log.address.toLowerCase() === contract.address.toLowerCase() &&
+        log.topics[0] === contract.interface.getEventTopic('Print')
+    );
+    if (logs.length !== 1) throw new Error('Expected one Print event for this round');
+
+    const { _name, _option1, _compmove } = contract.interface.parseLog(logs[0]).args;
+    const userMove = Number(_option1.toString());
+    const computerMove = Number(_compmove.toString());
+    if (userMove !== option ||
+        !Number.isInteger(computerMove) || computerMove < 0 || computerMove >= moves.length ||
+        !['YOU WON', 'COMPUTER WON', 'DRAW'].includes(_name)) {
+        throw new Error('Invalid round result');
     }
-    
-    function HTMLProcess(GetResult, GetUserMove, GetCompMove) {
-        if (GetResult == "YOU WON"){
-            userScore++;
-            userScore_span.innerHTML = userScore;
-            if (GetUserMove == "0"){
-                result_p.innerHTML = `Rock (User) beats Scissors (Computer). You win!`;
-            }
-            if (GetUserMove == "1"){
-                result_p.innerHTML = `Scissors (User) beats Paper (Computer). You win!`;
-            }
-            if (GetUserMove == "2"){
-                result_p.innerHTML = `Paper (User) beats Rock (Computer). You win!`;
-            }
+    return { outcome: _name, userMove, computerMove };
+}
+
+async function play(option) {
+    if (busy) return;
+    busy = true;
+    buttons.forEach(button => { button.disabled = true; });
+    resultLog.textContent = '—';
+    result.textContent = 'Round in progress…';
+    status.textContent = 'Checking wallet and network…';
+
+    let tx;
+    let receipt;
+    try {
+        if (!window.ethereum || !window.ethers) {
+            result.textContent = 'Wallet or ethers.js could not be loaded.';
+            status.textContent = 'Open the page with a compatible wallet and check your connection.';
+            return;
+        }
+        const provider = new ethers.providers.Web3Provider(window.ethereum, chainId);
+        const accounts = await provider.send('eth_requestAccounts', []);
+        if (!accounts.length) throw new Error('No wallet account available');
+        if (Number(await provider.send('eth_chainId', [])) !== chainId) {
+            result.textContent = 'Wrong network.';
+            status.textContent = 'Select BNB Smart Chain Testnet (chain ID 97) in your wallet.';
+            return;
+        }
+        if (await provider.getCode(contractAddress) === '0x') {
+            result.textContent = 'The game contract was not found.';
+            status.textContent = 'No transaction was sent. Check the configured testnet address.';
+            return;
         }
 
-        if (GetResult == "COMPUTER WON"){
-            computerScore++;
-            computerScore_span.innerHTML = computerScore;
-            if (GetCompMove == "0") {
-                result_p.innerHTML = `Scissors (User) loses to Rock (Computer). You lost...`; 
+        const contract = new ethers.Contract(contractAddress, abi, provider.getSigner(accounts[0]));
+        status.textContent = 'Confirm the move in your wallet…';
+        tx = await contract.YourMove(option);
+        status.textContent = `Waiting for confirmation. Transaction: ${tx.hash}`;
+        try {
+            receipt = await tx.wait(1);
+        } catch (error) {
+            // Ethers labels a speed-up with the same destination, value and data as repriced.
+            if (error.code !== 'TRANSACTION_REPLACED' || error.reason !== 'repriced' || error.cancelled) {
+                throw error;
             }
-            if (GetCompMove == "1") {
-                result_p.innerHTML = `Paper (User) loses to Scissors (Computer). You lost...`;
-            }
-            if (GetCompMove == "2") {
-                result_p.innerHTML = `Rock (User) loses to Paper (Computer). You lost...`;
-            }
+            receipt = error.receipt;
+        }
+        if (receipt.status !== 1) {
+            result.textContent = 'Transaction failed. No point was added.';
+            status.textContent = `Transaction: ${receipt.transactionHash}`;
+            return;
         }
 
-        if (GetResult == "DRAW"){
-            result_p.innerHTML = `DRAW`;
+        const round = roundFromReceipt(receipt, contract, option);
+        showRound(round.outcome, round.userMove, round.computerMove);
+        status.textContent = `Round confirmed. Transaction: ${receipt.transactionHash}`;
+    } catch (error) {
+        if (error.code === 4001 || error.code === 'ACTION_REJECTED') {
+            result.textContent = 'Request declined in the wallet.';
+            status.textContent = 'No point was added.';
+        } else if (error.code === 'TRANSACTION_REPLACED') {
+            result.textContent = 'The move transaction was cancelled or replaced.';
+            status.textContent = 'No point was added.';
+        } else if (error.receipt?.status === 0) {
+            result.textContent = 'Transaction failed. No point was added.';
+            status.textContent = `Transaction: ${error.receipt.transactionHash || tx?.hash || 'unavailable'}`;
+        } else if (receipt?.status === 1) {
+            result.textContent = 'Transaction confirmed, but the game result could not be read.';
+            status.textContent = `No point was added. Transaction: ${receipt.transactionHash}`;
+        } else if (tx) {
+            result.textContent = 'Confirmation could not be verified.';
+            status.textContent = `Check the status in your wallet before submitting another move. Transaction: ${tx.hash}`;
+        } else {
+            result.textContent = 'Could not submit the move.';
+            status.textContent = 'Check the wallet and testnet connection. No point was added.';
         }
+        console.error(error);
+    } finally {
+        buttons.forEach(button => { button.disabled = false; });
+        busy = false;
     }
+}
 
-    function main() {
-        rock_div.addEventListener('click', function(){play("0");},)
-        scissors_div.addEventListener('click', function(){play("1");})
-        paper_div.addEventListener('click', function(){play("2");})
-    }
-
-main();
+buttons.forEach(button => button.addEventListener('click', () => play(Number(button.id))));

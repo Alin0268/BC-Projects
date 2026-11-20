@@ -7,18 +7,14 @@
     <title>RPS Game</title>
     <link rel="stylesheet" href="style.css">
     <script
-      src="https://cdn.ethers.io/lib/ethers-5.4.umd.min.js"
+      src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.8.0/ethers.umd.min.js"
       type="application/javascript">
     </script>
 </head>
 <body>
     <header>
-       
-        <h2>dApp is an application that works without a backend, in a decentralized computer system, for example, on a blockchain</h2>
-        <h2>With the web 3 version of the Internet, online platforms are decentralized, do not require trust and are publicly available</h2>
-        <h3>Here is an example of such an application</h3>
         <h1>Rock Paper Scissors</h1>
-    
+        <p>A teaching demo on BNB Smart Chain Testnet. Use only testnet tokens.</p>
     </header>
 
     <div class="score-board">
@@ -27,33 +23,30 @@
         <span id="user-score">0</span>:<span id="computer-score">0</span>    
     </div>
 
-    <div class="result">
+    <div class="result" aria-live="polite">
         <p>Good luck!</p>
     </div>
 
     <div class="choices">
 
-        <div class="choice" id="0">
-            <img src="images/R.png" alt="">
-        </div>
+        <button type="button" class="choice" id="0">
+            <img src="images/R.png" alt="Rock">
+        </button>
 
-        <div class="choice" id="1">
-            <img src="images/S.png" alt="">
-        </div>
+        <button type="button" class="choice" id="1">
+            <img src="images/S.png" alt="Scissors">
+        </button>
 
-        <div class="choice" id="2">
-            <img src="images/P.png" alt="">
-        </div>
+        <button type="button" class="choice" id="2">
+            <img src="images/P.png" alt="Paper">
+        </button>
 
     </div>
     
-    <!--<p id="action-msg"><button onclick = "">Get game information</button></p>
-    -->
-    <p id="action-msg2">1. Сделать ход и одобрить транзакцию в MetaMask</p>
-    <p id="action-msg2">2. Если через 15 с. ответ не получен, значит "Contract interaction Failed". Повторить ход</p>
-    <p id="action-msg">Make your move</p>
-        <p><b>Result:</b> <span id="resultLog"></p>
-    
-<script src="newapp.js" charset="utf-8"></script>
+    <p id="action-msg2">Make a move and confirm it in your wallet. A pending transaction is not a failed move.</p>
+    <p id="action-msg" role="status">Make your move</p>
+    <p id="round-details"><b>Result:</b> <span id="resultLog">—</span></p>
+
+    <script src="newapp.js?v=2" charset="utf-8"></script>
 </body>
 </html>
